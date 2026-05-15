@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { TrendingUp, CheckCircle } from 'lucide-react'
+import { TrendingUp, CheckCircle, Mail, MailWarning } from 'lucide-react'
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('')
@@ -44,13 +44,38 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        <Card className="w-full max-w-md shadow-xl text-center">
-          <CardContent className="pt-8 pb-8 space-y-4">
+        <Card className="w-full max-w-md shadow-xl">
+          <CardContent className="pt-8 pb-8 space-y-5 text-center">
             <CheckCircle className="h-14 w-14 text-green-500 mx-auto" />
-            <h2 className="text-xl font-bold">Conta criada com sucesso!</h2>
-            <p className="text-gray-600">Verifique seu email para confirmar a conta antes de entrar.</p>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">Quase lá!</h2>
+              <p className="text-gray-600 mt-1">
+                Enviamos um link de confirmação para <strong>{email}</strong>.
+              </p>
+            </div>
+
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-left space-y-2">
+              <div className="flex items-center gap-2 text-amber-700 font-medium text-sm">
+                <MailWarning className="h-4 w-4 flex-shrink-0" />
+                Verifique sua caixa de spam
+              </div>
+              <p className="text-amber-700 text-sm">
+                O email de confirmação às vezes cai na pasta de <strong>spam</strong> ou
+                <strong> lixo eletrônico</strong>. Se não encontrar na caixa de entrada,
+                procure lá antes de tentar novamente.
+              </p>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-left">
+              <p className="text-blue-700 text-sm">
+                Após clicar no link do email, você será redirecionado para entrar na sua conta.
+              </p>
+            </div>
+
             <Link href="/login">
-              <Button className="bg-blue-600 hover:bg-blue-700">Ir para o login</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700 w-full">
+                Ir para o login
+              </Button>
             </Link>
           </CardContent>
         </Card>
@@ -72,6 +97,14 @@ export default function RegisterPage() {
           <CardDescription>Comece a organizar suas finanças hoje</CardDescription>
         </CardHeader>
         <CardContent className="pt-4">
+          <div className="flex items-start gap-2 bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 mb-4">
+            <Mail className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-blue-700">
+              Após o cadastro, enviaremos um <strong>email de confirmação</strong>. Verifique também
+              a pasta de <strong>spam</strong> caso não encontre na caixa de entrada.
+            </p>
+          </div>
+
           <form onSubmit={handleRegister} className="space-y-4">
             {error && (
               <Alert variant="destructive">
