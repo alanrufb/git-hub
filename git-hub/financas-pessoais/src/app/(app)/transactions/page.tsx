@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { TransactionDialog } from '@/components/transaction-dialog'
 import { TransactionList } from '@/components/transaction-list'
 import { TransactionFilters } from '@/components/transaction-filters'
+import { ExportCsvButton } from '@/components/export-csv-button'
 import { Transaction } from '@/types'
 
 interface TransactionsPageProps {
@@ -40,9 +41,23 @@ export default async function TransactionsPage({ searchParams }: TransactionsPag
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <h1 className="text-2xl font-bold text-gray-900">Transações</h1>
-        <TransactionDialog />
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Transações</h1>
+        <div className="flex items-center gap-2">
+          <ExportCsvButton transactions={transactions} />
+          <TransactionDialog />
+        </div>
       </div>
+
+      {transactions.length > 0 && (
+        <div className="flex items-start gap-2 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg px-3 py-2.5 text-sm text-blue-700 dark:text-blue-300">
+          <span>
+            O arquivo CSV é compatível com <strong>Excel</strong> e <strong>Google Sheets</strong>.
+            Clique em <strong>Exportar CSV</strong> para baixar as{' '}
+            <strong>{transactions.length} transação(ões)</strong> listadas com os filtros atuais.
+          </span>
+        </div>
+      )}
+
       <TransactionFilters />
       <TransactionList transactions={transactions} />
     </div>
